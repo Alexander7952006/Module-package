@@ -76,11 +76,14 @@ def get_rows_by_index(*values, copy_table=False):
                   el.count('7') + el.count('8') + el.count('9') + 1 == len(el)):
                 rows[indx1][indx2] = int(el)
     iteration = 0
-    for val in vals:
-        if val == rows[iteration][0]:
-            result.append(rows[iteration])
-        iteration += 1
-        
+    try:
+        for val in vals:
+            if val == rows[iteration][0]:
+                result.append(rows[iteration])
+            iteration += 1
+    except IndexError:
+        return 'Задано слишком большое кол-во значений'
+
     if copy_table is False:
         save_table_csv(result)
         save_table_csv(result, file_name)
