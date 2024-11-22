@@ -57,6 +57,29 @@ def get_rows_by_number(start, stop, copy_table = False):
         return 'Нет элемента с таким индексом'
 
 
+def get_rows_by_index(*values, copy_table = False):
+    rows = load_table_csv()[0]
+    file_name = load_table_csv()[1]
+    result = []
+    vals = [val for val in values]
+    if vals[-1] == True:
+        vals = vals[:-1]
+        copy_table = True
+    iteration = 0
+    try:
+        for val in vals:
+            if row[iteration][0] == vals:
+                result.append(row)
+            iteration += 1
+    except IndexError:
+        return 'Дано слишком много значений на вход'
+    if copy_table == False:
+        save_table_csv(result)
+        save_table_csv(result, file_name)
+    else:
+        save_table_csv(result)
+
+
 def get_column_types(by_number = True):
     rows = load_table_csv()[0]
     dct = {}
